@@ -43,6 +43,10 @@ inputs:
 
   project-id:
     description: "Project Id for the target Repository."
+    required: false
+
+  repository_url:
+    description: "Url for the target Repository."
     required: true
 
   username:
@@ -60,10 +64,10 @@ runs:
         GITHUB_ACTION_PATH: ${{ github.action_path }}
         GITLAB_HOSTNAME: ${{ inputs.hostname }}
         GITLAB_PASSWORD: ${{ inputs.password }}
-        GITLAB_PROJECT_ID: ${{ inputs.project-id }}
+        REPOSITORY_URL: ${{ inputs.repository_url }}
         GITLAB_USERNAME: ${{ inputs.username }}
       run: |-
-        url="https://$GITLAB_HOSTNAME/$GITLAB_USERNAME/$GITLAB_PROJECT_ID.git"
+        url="$REPOSITORY_URL"
         branch=$(git symbolic-ref --short HEAD)
 
         git config core.askPass "$GITHUB_ACTION_PATH/ask-pass.sh"
